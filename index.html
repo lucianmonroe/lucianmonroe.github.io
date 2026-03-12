@@ -160,13 +160,21 @@
     /* MAIN */
     #main {
       flex: 1;
-      margin-right: var(--sidebar-w);
       padding: 48px 48px 100px;
       max-width: 860px;
       margin-left: auto;
+      margin-right: auto;
+      width: 100%;
       transition: margin-right 0.25s ease;
     }
-    #main.full { margin-right: 0; margin-left: auto; }
+    body.sidebar-visible #main {
+      margin-right: var(--sidebar-w);
+      margin-left: auto;
+    }
+    body.sidebar-hidden #main {
+      margin-right: auto;
+      margin-left: auto;
+    }
 
     /* PAGE HEADER */
     .page-header {
@@ -534,7 +542,7 @@
           <pre>sudo dd if=/Users/barn/Downloads/void-live-x86_64-20250202-xfce.iso of=/dev/rdisk2 bs=1m</pre>
           <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
-        <div class="note-box"><span class="box-icon">📝</span><span>The path and filename above is just an example. Use your actual file path and filename.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span>The path and filename above is just an example. Use your actual file path and filename.</span></div>
         <div class="warn-box"><span class="box-icon">⚠</span><span>Replace <code>disk2</code> and <code>rdisk2</code> with your actual disk number from the list.</span></div>
         <p class="step-text">Wait for it to finish. It'll look frozen — that's normal. Don't unplug anything.</p>
         <p class="step-text">If you're impatient with no progress bar in sight, press <strong>Ctrl + T</strong> to check how many bytes have been copied so far.</p>
@@ -583,7 +591,6 @@
           <div class="step-row"><span class="step-arrow">→</span><span class="step-row-text">Find <strong>sda1 (200MB)</strong>: Set mount point to <code>/boot/efi</code>. Set filesystem to <code>vfat</code>. When asked <em>"Do you want to create a new filesystem on this partition?"</em> — select <strong>No</strong>. This means you are NOT formatting it.</span></div>
           <div class="step-row"><span class="step-arrow">→</span><span class="step-row-text">Find <strong>sda4 (60GB)</strong>: Set mount point to <code>/</code>. Set filesystem to <code>ext4</code>. When asked <em>"Do you want to create a new filesystem on this partition?"</em> — select <strong>Yes</strong>. This means you ARE formatting it.</span></div>
         </div>
-        <div class="note-box"><span class="box-icon">📝</span><span>"Create new filesystem" = format. <strong>Yes</strong> formats it. <strong>No</strong> leaves it untouched.</span></div>
       </div>
     </div>
 
@@ -676,7 +683,7 @@ mute = 0</pre>
           <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <p class="step-text">Find the line that says <code>GRUB_CMDLINE_LINUX_DEFAULT</code> and change the value to <code>loglevel=2</code>.</p>
-        <div class="note-box"><span class="box-icon">📝</span><span><code>loglevel=2</code> is needed because on Void with GNOME, using the default <code>loglevel=4</code> causes errors on boot.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span><code>loglevel=2</code> is needed because on Void with GNOME, using the default <code>loglevel=4</code> causes errors on boot.</span></div>
         <p class="step-text">Press <strong>Ctrl+O</strong>, <strong>Enter</strong>, then <strong>Ctrl+X</strong> to save and exit.</p>
         <p class="step-text">Apply the changes:</p>
         <div class="code-wrap">
@@ -838,9 +845,11 @@ sudo ln -s /etc/sv/bluetoothd /var/service/</pre>
 <script>
   let desktopSidebarOpen = true;
 
+  // Set initial body class
+  document.body.classList.add('sidebar-visible');
+
   function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    const main = document.getElementById('main');
     const overlay = document.getElementById('sidebar-overlay');
     const icon = document.getElementById('toggle-icon');
     const label = document.getElementById('toggle-label');
@@ -854,7 +863,8 @@ sudo ln -s /etc/sv/bluetoothd /var/service/</pre>
     } else {
       desktopSidebarOpen = !desktopSidebarOpen;
       sidebar.classList.toggle('hidden', !desktopSidebarOpen);
-      main.classList.toggle('full', !desktopSidebarOpen);
+      document.body.classList.toggle('sidebar-visible', desktopSidebarOpen);
+      document.body.classList.toggle('sidebar-hidden', !desktopSidebarOpen);
     }
   }
 
