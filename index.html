@@ -310,6 +310,38 @@
       #sidebar-overlay { display: none !important; }
       #sidebar.open { transform: translateX(0); }
     }
+    /* Base style for the link wrapper */
+.download-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-bottom: 8px;
+  transition: all 0.2s ease; /* Smooth transition for the effect */
+}
+
+/* Hover Effect: Changes background and lifts it slightly */
+.download-link:hover .app-item {
+  background-color: #e8e8e8; /* Light grey background on hover */
+  transform: translateY(-2px); /* Lifts the item slightly */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+/* Pressed Effect: Shrinks slightly when clicked */
+.download-link:active .app-item {
+  transform: translateY(0);
+  background-color: #d0d0d0; /* Darker grey when pressed */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Ensure the app-item has some padding for the effect to look good */
+.app-item {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+}
   </style>
 </head>
 <body class="sidebar-visible">
@@ -384,7 +416,7 @@
         <div class="code-wrap"><pre>diskutil unmountDisk /dev/disk2</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <p class="step-text">Now flash the ISO onto the USB:</p>
         <div class="code-wrap"><pre>sudo dd if=/Users/barn/Downloads/void-live-x86_64-20250202-xfce.iso of=/dev/rdisk2 bs=1m</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <div class="note-box"><span class="box-icon">📝</span><span>The path and filename above is just an example. Use your actual file path and filename.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span>The path and filename above is just an example. Use your actual file path and filename.</span></div>
         <div class="warn-box"><span class="box-icon">⚠</span><span>Replace <code>disk2</code> and <code>rdisk2</code> with your actual disk number from the list.</span></div>
         <p class="step-text">Wait for it to finish. It'll look frozen — that's normal. Don't unplug anything.</p>
         <p class="step-text">If you're impatient with no progress bar in sight, press <strong>Ctrl + T</strong> to check how many bytes have been copied so far.</p>
@@ -428,7 +460,7 @@
           <div class="step-row"><span class="step-arrow">→</span><span class="step-row-text">Find <strong>sda1 (200MB)</strong>: Set mount point to <code>/boot/efi</code>. Set filesystem to <code>vfat</code>. When asked <em>"Do you want to create a new filesystem on this partition?"</em> — select <strong>No</strong>. This means you are NOT formatting it.</span></div>
           <div class="step-row"><span class="step-arrow">→</span><span class="step-row-text">Find <strong>sda4 (60GB)</strong>: Set mount point to <code>/</code>. Set filesystem to <code>ext4</code>. When asked <em>"Do you want to create a new filesystem on this partition?"</em> — select <strong>Yes</strong>. This means you ARE formatting it.</span></div>
         </div>
-        <div class="note-box"><span class="box-icon">📝</span><span>"Create new filesystem" = format. <strong>Yes</strong> formats it. <strong>No</strong> leaves it untouched.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span>"Create new filesystem" = format. <strong>Yes</strong> formats it. <strong>No</strong> leaves it untouched.</span></div>
       </div>
     </div>
 
@@ -490,7 +522,7 @@ mute = 0</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></d
         <p class="step-text">Now open the GRUB config file:</p>
         <div class="code-wrap"><pre>sudo nano /etc/default/grub</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <p class="step-text">Find the line that says <code>GRUB_CMDLINE_LINUX_DEFAULT</code> and change the value to <code>loglevel=2</code>.</p>
-        <div class="note-box"><span class="box-icon">📝</span><span><code>loglevel=2</code> is needed because on Void with GNOME, using the default <code>loglevel=4</code> causes errors on boot.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span><code>loglevel=2</code> is needed because on Void with GNOME, using the default <code>loglevel=4</code> causes errors on boot.</span></div>
         <p class="step-text">Press <strong>Ctrl+O</strong>, <strong>Enter</strong>, then <strong>Ctrl+X</strong> to save and exit.</p>
         <p class="step-text">Apply the changes:</p>
         <div class="code-wrap"><pre>sudo update-grub</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
@@ -592,7 +624,7 @@ sudo ln -s /etc/sv/elogind /var/service/</pre><button class="copy-btn" onclick="
         <div class="code-wrap"><pre>flatpak install flathub [application ID]</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <p class="step-text">To uninstall:</p>
         <div class="code-wrap"><pre>flatpak uninstall [application ID]</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <div class="note-box"><span class="box-icon">📝</span><span>If you'd like GNOME Software run: <code>sudo xbps-install -S gnome-software gnome-software-plugin-flatpak</code></span></div>
+        <div class="note-box"><span class="box-icon"></span><span>If you'd like GNOME Software run: <code>sudo xbps-install -S gnome-software gnome-software-plugin-flatpak</code></span></div>
 
         <div class="subsection-label">Install via xbps</div>
         <div class="app-list">
@@ -621,7 +653,7 @@ flatpak install flathub org.gnome.Solanum</pre><button class="copy-btn" onclick=
 
         <div class="subsection-label">Manual Install</div>
         <div class="app-list">
-          <div class="app-item"><span class="app-num">01</span>XP Pen Driver — see Section 11</div>
+          <div class="app-item"><span class="app-num">01</span>XP Pen Driver (see Section 11)</div>
         </div>
       </div>
     </div>
@@ -683,13 +715,13 @@ sudo ln -s /etc/sv/bluetoothd /var/service/</pre><button class="copy-btn" onclic
         <p class="step-text">Copy the path of the extracted folder.</p>
         <p class="step-text">Open Terminal and navigate to that folder:</p>
         <div class="code-wrap"><pre>cd /home/void/Downloads/XPPenLinux4.0.13-251226</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <div class="note-box"><span class="box-icon">📝</span><span>Replace the path with your actual extracted folder path.</span></div>
+        <div class="note-box"><span class="box-icon"></span><span>Replace the path with your actual extracted folder path.</span></div>
         <p class="step-text">Run the installer:</p>
         <div class="code-wrap"><pre>sudo ./install.sh</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
       </div>
     </div>
 
-  <div class="section-card" id="s12">
+<div class="section-card" id="s12">
   <div class="section-header" onclick="toggleSection(this)">
     <span class="s-num">12</span>
     <span class="s-title">Download the Documentation</span>
@@ -700,22 +732,21 @@ sudo ln -s /etc/sv/bluetoothd /var/service/</pre><button class="copy-btn" onclic
     <p class="step-text">Download a copy of this documentation:</p>
     <div class="app-list">
       
-      <a href="gnomevoid.docx" download class="app-link" style="text-decoration: none; color: inherit;">
+      <a href="gnomevoid.docx" download class="download-link">
         <div class="app-item">
           <span class="app-num"></span>gnomevoid.docx
         </div>
       </a>
       
-      <a href="gnomevoid.png" download class="app-link" style="text-decoration: none; color: inherit;">
+      <a href="gnomevoid.pdf" download class="download-link">
         <div class="app-item">
-          <span class="app-num"></span>gnomevoid.png
+          <span class="app-num"></span>gnomevoid.pdf
         </div>
       </a>
 
     </div>
   </div>
 </div>
-
     <!-- CLOSING -->
     <div class="closing-card">
       <h2>// done.</h2>
