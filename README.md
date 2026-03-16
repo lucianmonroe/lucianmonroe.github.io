@@ -1,5 +1,6 @@
 # lucianmonroe.github.
 # Install the wallpapers and icon-themes.zip for quick acsess to the downloads
+![My Screenshot](ss.png)
 # To make gnome software work use this : 
 It looks like you're missing a few essential "glue" packages that GNOME Software needs to actually talk to the internet and parse the app data. Since `killall` and `appstream-util` aren't found, your installation is a bit "too" minimal right now.
 
