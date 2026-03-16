@@ -1,4 +1,4 @@
-# lucianmonroe.github.
+# lucianmonroe.github.io
 # Install the wallpapers and icon-themes.zip for quick acsess to the downloads
 ![My Screenshot](ss.png)
 # To make gnome software work use this : 
