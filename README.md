@@ -72,6 +72,66 @@ flatpak update --appstream
 
 ```
 
+It’s a great feeling when those clicks finally start firing! You’ve essentially built a custom sound engine on a minimalist "rolling" system—not a small feat.
+
+Here is the complete summary of the steps we took to get **Keyboard Sounds** running on **Void Linux (GNOME 48.5/49)**.
+
 ---
 
-**Did `gnome-software --verbose` actually give you any text output this time, or did it just go back to the command prompt immediately?**
+## 🛠️ The Ultimate "Cool Sounds" Setup Guide
+
+### Phase 1: Install Build Tools & Libraries
+Because Void Linux is minimal, you first need the "blueprints" to compile the sound engine from source code.
+```bash
+sudo xbps-install -S base-devel python3-devel kernel-libc-headers \
+SDL2-devel SDL2_mixer-devel SDL2_image-devel SDL2_ttf-devel \
+freetype-devel libpng-devel portmidi-devel python3-tkinter
+```
+
+### Phase 2: Install the Python Package Manager
+You need `pipx` to install the tool in an isolated "bubble" so it doesn't break your system.
+```bash
+sudo xbps-install -S python3-pipx
+```
+
+### Phase 3: Build the Sound Engine
+This part takes the longest because it compiles the `pygame` and `evdev` libraries specifically for your hardware.
+```bash
+pipx install keyboardsounds --pip-args="pygame-ce"
+```
+
+### Phase 4: Configure the "Path"
+You must tell your terminal where the new `kbs` command lives.
+1. Run this: `pipx ensurepath`
+2. Then refresh your shell: `source ~/.bashrc`
+3. Verify it works: `kbs --version` (It should return a version number like **6.4.3**).
+
+### Phase 5: Fix System Permissions
+Wayland and GNOME require your user to have permission to "hear" the keyboard across different apps.
+1. Add your user to the input group: `sudo gpasswd -a $USER input`
+2. **CRITICAL:** You must **Log Out and Log Back In** for this to apply.
+
+### Phase 6: The GNOME Extension
+1. Install **Extension Manager** from the software store or via terminal: `sudo xbps-install -S extension-manager`.
+2. Disable version checking (since you are on GNOME 48.5 and the extension is for 49):
+   ```bash
+   gsettings set org.gnome.shell disable-extension-version-validation true
+   ```
+3. Open **Extension Manager**, search for **Keyboard Sounds**, and turn it **ON**.
+
+---
+
+## 📋 Summary Table of Commands
+
+| Action | Command |
+| :--- | :--- |
+| **Fix Broken Libs** | `sudo xbps-install -Suv` |
+| **Check Version** | `kbs --version` |
+| **Stop All Sounds** | `pkill buckle` or `pkill kbs` |
+| **Adjust Volume** | Use the keyboard icon in the GNOME Top Bar |
+| **Run Manually** | `kbs start` |
+
+---
+
+## 💡 What can I do for you next?
+Now that the core system is working, would you like me to find some **custom sound packs** (like Minecraft, Lego, or Star Wars) and show you exactly where to paste them so they show up in your menu?
